@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace Assignment4.Entities
 {
     public class User
@@ -12,6 +15,6 @@ namespace Assignment4.Entities
         [StringLength(100)]
         public string Email { get; set; }
 
-        public Icollection<Task> Tasks { get; set; }
+        public ICollection<Task> Tasks { get; set; }
     }
 }
