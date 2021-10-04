@@ -1,12 +1,11 @@
-﻿using System;
-
-namespace Assignment4
+﻿namespace Assignment4
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            using var context = new DbContextFactory().CreateDbContext(args);
+            DbContextFactory.Seed(context);
         }
     }
 }

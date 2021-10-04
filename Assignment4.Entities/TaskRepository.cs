@@ -5,10 +5,14 @@ namespace Assignment4.Entities
 {
     public class TaskRepository : ITaskRepository
     {
-        public void Dispose()
+        KanbanContext _context;
+        
+        public TaskRepository(KanbanContext context)
         {
-            throw new System.NotImplementedException();
+            _context = context;
         }
+        
+        public void Dispose() => _context.Dispose();
 
         public IReadOnlyCollection<TaskDTO> All()
         {
