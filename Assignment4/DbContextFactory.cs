@@ -24,11 +24,11 @@ namespace Assignment4
 
         public static void Seed(KanbanContext context)
         {
-           /* context.Users.AddRange(
+           context.Users.AddRange(
                 new User {Name = "Mads", Email = "mads@itu.dk", Tasks = { }},
                 new User {Name = "Kristian", Email = "kris@itu.dk", Tasks = { }},
                 new User {Name = "Anton", Email = "anto@itu.dk", Tasks = { }}
-            );*/
+            );
             context.Tags.Add(new Tag {Name = "Create", Tasks = { }});
             context.SaveChanges();
         }
