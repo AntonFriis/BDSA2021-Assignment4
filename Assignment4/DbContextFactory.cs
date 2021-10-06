@@ -9,9 +9,9 @@ using static Assignment4.Core.State;
 
 namespace Assignment4
 {
-    public class DbContextFactory : IDesignTimeDbContextFactory<KanbanContext>
+    public class DbContextFactory
     {
-        public KanbanContext CreateDbContext(string[] args)
+        public KanbanContext CreateDbContext()
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
