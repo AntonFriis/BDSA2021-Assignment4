@@ -1,4 +1,6 @@
-﻿namespace Assignment4
+﻿using System;
+
+namespace Assignment4
 {
     public class Program
     {

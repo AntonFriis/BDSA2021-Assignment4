@@ -6,12 +6,12 @@ namespace Assignment4.Entities
     public class TaskRepository : ITaskRepository
     {
         KanbanContext _context;
-        
+
         public TaskRepository(KanbanContext context)
         {
             _context = context;
         }
-        
+
         public void Dispose() => _context.Dispose();
 
         public IReadOnlyCollection<TaskDTO> All()
