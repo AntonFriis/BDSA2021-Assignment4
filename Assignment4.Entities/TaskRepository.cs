@@ -4,6 +4,7 @@ using System.Linq;
 using System;
 using Assignment4.Core;
 using static Assignment4.Core.Response;
+using static Assignment4.Core.State;
 
 namespace Assignment4.Entities
 {
@@ -18,7 +19,21 @@ namespace Assignment4.Entities
 
         public (Response Response, int TaskId) Create(TaskCreateDTO task)
         {
-            return (BadRequest, 0);
+            var tagsFound = new List<Tag>();
+            foreach (var tag in task.Tags)
+            {
+                tagsFound.Add(_context.Tags.Select(t => t).Where(t => t.Name == tag).FirstOrDefault());
+            }
+
+            var taskNew = new Task{
+                    Title = task.Title,
+                    AssignedTo = _context.Users.Find(task.AssignedToId), // might fail due to nullable need to check this.
+                    Description = task.Description,
+                    State = New,
+                    Tags = tagsFound
+            };
+
+            return (Created, _context.SaveChanges());
         }
         public IReadOnlyCollection<TaskDTO> ReadAll()
         {
