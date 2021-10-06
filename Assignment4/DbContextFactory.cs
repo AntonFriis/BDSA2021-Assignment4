@@ -35,16 +35,9 @@ namespace Assignment4
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tags', RESEED, 0)"); // Reset Index to 0.
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Users', RESEED, 0)"); // Reset Index to 0.
 
-            //var emptyList = new List<Tag>();
-            //var emptyTaskList = new List<Task>();
-
             var taskStateNew = new Task {Title = "Implement ITaskRepository", Description = "SomeThing", State = New, Tags = new List<Tag>{}};
             var taskStateActive = new Task {Title = "Make UML", Description = "An Active", State = Active, Tags = new List<Tag>{}};
             var taskStateResolved = new Task {Title = "Cookies", Description = "We Did it", State = Resolved, Tags = new List<Tag>{}};
-
-            //taskStateNew.Tags = emptyList;
-            //7askStateActive.Tags= emptyList;
-            //taskStateResolved.Tags = emptyList;
 
             var documentation = new Tag {Name = "Documentation", Tasks = new List<Task>{}};
             var coding = new Tag {Name = "Coding", Tasks = new List<Task>{}};
@@ -72,25 +65,19 @@ namespace Assignment4
                 kristian,
                 anton
             );
-
+            
+            context.Tags.AddRange(
+                documentation,
+                coding,
+                other
+            );
+            
             context.Tasks.AddRange(
                 taskStateNew,
                 taskStateActive,
                 taskStateResolved
             );
 
-            context.Tags.AddRange(
-                documentation,
-                coding,
-                other
-            );
-
-           context.Users.AddRange(
-                new User {Name = "Mads", Email = "mads@itu.dk", Tasks = { }},
-                new User {Name = "Kristian", Email = "kris@itu.dk", Tasks = { }},
-                new User {Name = "Anton", Email = "anto@itu.dk", Tasks = { }}
-            );
-            context.Tags.Add(new Tag {Name = "Create", Tasks = { }});
             context.SaveChanges();
         }
     }
