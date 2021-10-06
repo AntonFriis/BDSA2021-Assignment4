@@ -6,7 +6,7 @@ namespace Assignment4
     {
         static void Main(string[] args)
         {
-            using var context = new DbContextFactory().CreateDbContext(args);
+            using var context = new DbContextFactory().CreateDbContext();
             DbContextFactory.Seed(context);
         }
     }

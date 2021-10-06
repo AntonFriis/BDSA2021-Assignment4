@@ -27,7 +27,7 @@ namespace Assignment4.Entities
                     Title = task.Title,
                     Description = task.Description,
                     AssignedToId = task.AssignedTo.Id,
-                    Tags = task.Tags.Select(tag => tag.ToString()).ToList().AsReadOnly(),
+                    Tags = task.Tags.Select(tag => tag.Name).ToImmutableList(),
                     State = task.State
                 });
             }
