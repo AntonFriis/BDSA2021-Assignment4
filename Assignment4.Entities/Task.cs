@@ -9,8 +9,8 @@ namespace Assignment4.Entities
     {
         public int Id { get; set; }
 
-        [Required] 
-        [StringLength(100)] 
+        [Required]
+        [StringLength(100)]
         public string Title { get; set; }
 
         //optional
@@ -18,7 +18,7 @@ namespace Assignment4.Entities
 
         [StringLength(int.MaxValue)] //optional
         public string Description { get; set; }
-        
+
         [Required]
         [StringLength(50)]
         public State State { get; set; }
