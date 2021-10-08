@@ -10,16 +10,20 @@ using static Assignment4.Core.Response;
 
 namespace Assignment4.Entities.Tests
 {
-    public class TaskRepositoryTests
+    public class TaskRepositoryTests : IDisposable
     {
-        //KanbanContext context = new DbContextFactory().CreateDbContext();
+        private readonly KanbanContext _context;
+        private readonly TaskRepository _repo;
+        public TaskRepositoryTests()
+        {
+            _context = new DbContextFactory().CreateDbContext(); // Will be changed to In Mem Context.
+            _repo = new TaskRepository(_context);
+        }
 
         [Fact]
         public void TaskCreate_Returns_Created_And_A_Number_Larger_Than_2()
         {
             // Arrange
-            KanbanContext _context = new DbContextFactory().CreateDbContext(); // Will be changed to In Mem Context.
-            var _Repo = new TaskRepository(_context);
             var workOnWorkTask = new TaskCreateDTO {
                         Title = "workOnWorkTask",
                         AssignedToId = 1,
@@ -28,7 +32,7 @@ namespace Assignment4.Entities.Tests
             };
 
             // Act
-            var result = _Repo.Create(workOnWorkTask);
+            var result = _repo.Create(workOnWorkTask);
 
             // Assert
             Assert.Equal(Created, result.Item1);
@@ -58,5 +62,9 @@ namespace Assignment4.Entities.Tests
         // {
         // }
 
+        public void Dispose()
+        {
+            _context?.Dispose();
+        }
     }
 }

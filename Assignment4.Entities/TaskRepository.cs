@@ -22,7 +22,7 @@ namespace Assignment4.Entities
             var tagsFound = new List<Tag>();
             foreach (var tag in task.Tags)
             {
-                tagsFound.Add(_context.Tags.Select(t => t).Where(t => t.Name == tag).FirstOrDefault());
+                tagsFound.Add(_context.Tags.Select(t => t).FirstOrDefault(t => t.Name == tag));
             }
 
             var taskNew = new Task{
