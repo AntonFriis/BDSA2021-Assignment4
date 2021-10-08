@@ -9,7 +9,7 @@ using static Assignment4.Core.State;
 
 namespace Assignment4
 {
-    public class DbContextFactory
+    public class DbContextFactory : IDesignTimeDbContextFactory<KanbanContext>
     {
         public KanbanContext CreateDbContext()
         {
@@ -23,6 +23,11 @@ namespace Assignment4
             optionsBuilder.UseSqlServer(connectionString, b => b.MigrationsAssembly("Assignment4"));
 
             return new KanbanContext(optionsBuilder.Options);
+        }
+
+        public KanbanContext CreateDbContext(string[] args)
+        {
+            return CreateDbContext();
         }
 
         public static void Seed(KanbanContext context)
@@ -65,13 +70,13 @@ namespace Assignment4
                 kristian,
                 anton
             );
-            
+
             context.Tags.AddRange(
                 documentation,
                 coding,
                 other
             );
-            
+
             context.Tasks.AddRange(
                 taskStateNew,
                 taskStateActive,

@@ -6,6 +6,7 @@ using Assignment4;
 using Microsoft.EntityFrameworkCore.Internal;
 using Xunit;
 using static Assignment4.Core.State;
+using static Assignment4.Core.Response;
 
 namespace Assignment4.Entities.Tests
 {
@@ -14,41 +15,45 @@ namespace Assignment4.Entities.Tests
         //KanbanContext context = new DbContextFactory().CreateDbContext();
 
         [Fact]
-        public void TaskAll_Returns3Tasks()
+        public void TaskCreate_Returns_Created_And_A_Number_Larger_Than_2()
         {
-            using var context = new DbContextFactory().CreateDbContext();
-            var tasks = new TaskRepository(context).All();
-            Assert.Equal(3, tasks.Count);
+            // Arrange
+            KanbanContext _context = new DbContextFactory().CreateDbContext(); // Will be changed to In Mem Context.
+            var _Repo = new TaskRepository(_context);
+            var workOnWorkTask = new TaskCreateDTO {
+                        Title = "workOnWorkTask",
+                        AssignedToId = 1,
+                        Description = "A Work Task",
+                        Tags = new List<string>{"coding"}
+            };
+
+            // Act
+            var result = _Repo.Create(workOnWorkTask);
+
+            // Assert
+            Assert.Equal(Created, result.Item1);
         }
-        
+
         [Fact]
         public void TaskCreate_ReturnsId4()
         {
-            using var context = new DbContextFactory().CreateDbContext();
-            var task = new TaskDTO {
-                Title = "Test task",
-                Description = "Task for testing",
-                State = Closed};
-            Assert.Equal(4, new TaskRepository(context).Create(task));
+
         }
-        
+
         [Fact]
         public void TaskDelete_ReturnsCountOf2()
         {
-            using var context = new DbContextFactory().CreateDbContext();
-            new TaskRepository(context).Delete(2);
-            Assert.Equal(2, context.Tasks.Count());
+
         }
-        
+
         [Fact]
         public void TaskFindById_ReturnsTaskTitleImplement_FromTaskId1()
         {
-            using var context = new DbContextFactory().CreateDbContext();
-            Assert.Equal("Implement ITaskRepository", new TaskRepository(context).FindById(1).Title);
+
         }
-        
-        
-        
+
+
+
         // public void Update(TaskDTO task)
         // {
         // }
