@@ -12,19 +12,19 @@ namespace Assignment4.Entities.Tests
 {
     public class TaskRepositoryTests
     {
-        //KanbanContext context = new DbContextFactory().CreateDbContext();
+        TaskRepository _Repo = new TaskRepository(new DbContextFactory().CreateDbContext());
+
+
 
         [Fact]
         public void TaskCreate_Returns_Created_And_A_Number_Larger_Than_2()
         {
             // Arrange
-            KanbanContext _context = new DbContextFactory().CreateDbContext(); // Will be changed to In Mem Context.
-            var _Repo = new TaskRepository(_context);
             var workOnWorkTask = new TaskCreateDTO {
-                        Title = "workOnWorkTask",
-                        AssignedToId = 1,
-                        Description = "A Work Task",
-                        Tags = new List<string>{"coding"}
+                Title = "workOnWorkTask",
+                AssignedToId = 1,
+                Description = "A Work Task",
+                Tags = new List<string>{"coding"}
             };
 
             // Act
@@ -35,28 +35,53 @@ namespace Assignment4.Entities.Tests
         }
 
         [Fact]
-        public void TaskCreate_ReturnsId4()
+        public void TaskReadAll_Returns_List_With4_Elements()
         {
+            // Act
+            var result = _Repo.ReadAll();
+
+            // Assert // Should Deffinitely also test that Refs to User and List of Tags have been associated.
+            Assert.Equal(4, result.Count);
 
         }
 
         [Fact]
-        public void TaskDelete_ReturnsCountOf2()
+        public void TaskReadAllRemoved_Returns_1Item()
         {
+            // Act
+            var result = _Repo.ReadAllRemoved();
+
+            // Assert // Should Deffinitely also test that Refs to User and List of Tags have been associated.
+            Assert.Equal(1, result.Count);
+        }
+
+        [Fact]
+        public void TaskReadAllByTag_Returns1Item()
+        {
+            // Act
+            var result = _Repo.ReadAllByTag("Coding");
+
+            // Assert // Should Deffinitely also test that Refs to User and List of Tags have been associated.
+            Assert.Equal(1, result.Count);
 
         }
 
         [Fact]
-        public void TaskFindById_ReturnsTaskTitleImplement_FromTaskId1()
+        public void TaskReadAllByUser_Returns1Item()
         {
+            var result = _Repo.ReadAllByUser(1);
 
+            // Assert // Should Deffinitely also test that Refs to User and List of Tags have been associated.
+            Assert.Equal(1, result.Count);
         }
 
+        [Fact]
+        public void TaskReadAllByState_Returns1Item()
+        {
+            var result = _Repo.ReadAllByState(New);
 
-
-        // public void Update(TaskDTO task)
-        // {
-        // }
-
+            // Assert // Should Deffinitely also test that Refs to User and List of Tags have been associated.
+            Assert.Equal(1, result.Count);
+        }
     }
 }
