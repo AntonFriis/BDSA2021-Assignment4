@@ -35,11 +35,16 @@ namespace Assignment4
             context.Database.ExecuteSqlRaw("DELETE dbo.Tasks"); // Remove existing. WARNING: This Should not be run in production environment.
             context.Database.ExecuteSqlRaw("DELETE dbo.Tags"); // Remove existing. WARNING: This Should not be run in production environment.
             context.Database.ExecuteSqlRaw("DELETE dbo.Users"); // Remove existing. WARNING: This Should not be run in production environment.
-
+            
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tasks', RESEED, 0)"); // Reset Index to 0.
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tags', RESEED, 0)"); // Reset Index to 0.
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Users', RESEED, 0)"); // Reset Index to 0.
 
+            DataFiller(context);
+        }
+        
+        public static void DataFiller(KanbanContext context)
+        {
             var taskStateNew = new Task {Title = "Implement ITaskRepository", Description = "SomeThing", State = New, Tags = new List<Tag>{}};
             var taskStateActive = new Task {Title = "Make UML", Description = "An Active", State = Active, Tags = new List<Tag>{}};
             var taskStateResolved = new Task {Title = "Cookies", Description = "We Did it", State = Resolved, Tags = new List<Tag>{}};

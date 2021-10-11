@@ -1,13 +1,13 @@
 using Assignment4.Core;
 using System.Collections.Generic;
-using System;
+using System.Linq;
 using static Assignment4.Core.Response;
 
 namespace Assignment4.Entities
 {
     public class UserRepository : IUserRepository
     {
-        KanbanContext _context;
+        private readonly KanbanContext _context;
 
         public UserRepository(KanbanContext context)
         {
@@ -16,8 +16,10 @@ namespace Assignment4.Entities
 
         public (Response Response, int UserId) Create(UserCreateDTO user)
         {
-            //Check if user exists. @TO-DO
-
+            if (user.Email == _context.Users.Where(u => u.Email == user.Email)
+                    .Select(u => u).FirstOrDefault()?.Email)
+                    return (Conflict, 0);
+            
             var userEntity = new User
             {
                 Name = user.Name,
@@ -25,28 +27,61 @@ namespace Assignment4.Entities
             };
 
             _context.Users.Add(userEntity);
-            return (Created , _context.SaveChanges());
+            _context.SaveChanges();
+            
+            return (Created , userEntity.Id);
 
         }
 
-        public IReadOnlyCollection<UserDTO> ReadAll()
-        {
-            throw new NotImplementedException();
-        }
+        public IReadOnlyCollection<UserDTO> ReadAll() => 
+            _context.Users.Select(u => new UserDTO(u.Id, u.Name, u.Email)).ToList().AsReadOnly();
 
         public UserDTO Read(int userId)
         {
-            throw new NotImplementedException();
+            var users = from u in _context.Users
+                where u.Id == userId
+                select new UserDTO(u.Id, u.Name, u.Email);
+
+            return users.FirstOrDefault();
         }
 
         public Response Update(UserUpdateDTO user)
         {
-            throw new NotImplementedException();
+            var entity = _context.Users.Find(user.Id);
+
+            if (entity == null)
+            {
+                return NotFound;
+            }
+
+            entity.Id = user.Id;
+            entity.Name = user.Name;
+            entity.Email = user.Email;
+
+            _context.SaveChanges();
+
+            return Updated;
         }
 
         public Response Delete(int userId, bool force = false)
         {
-            throw new NotImplementedException();
+            var entity = _context.Users.Find(userId);
+
+            if (entity == null)
+            {
+                return NotFound;
+            }
+
+            if (force || entity.Tasks.Count == 0)
+            {
+                _context.Users.Remove(entity);
+            } else if (entity.Tasks.Count != 0)
+            {
+                return Conflict;
+            }
+            
+            _context.SaveChanges();
+            return Deleted;
         }
     }
 }
