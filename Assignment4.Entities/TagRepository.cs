@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Assignment4.Core;
 using static Assignment4.Core.Response;
-using static Assignment4.Core.State;
 
 namespace Assignment4.Entities
 {
@@ -28,9 +27,8 @@ namespace Assignment4.Entities
         }
 
         public IReadOnlyCollection<TagDTO> ReadAll()
-        {
-            throw new System.NotImplementedException();
-        }
+            => _context.Tags.Select(t => new TagDTO(t.Id, t.Name)).ToList().AsReadOnly();
+        
 
         public TagDTO Read(int tagId)
         {
@@ -43,12 +41,40 @@ namespace Assignment4.Entities
 
         public Response Update(TagUpdateDTO tag)
         {
-            throw new System.NotImplementedException();
+            var entity = _context.Tags.Find(tag.Id);
+
+            if (entity == null)
+            {
+                return NotFound;
+            }
+
+            entity.Id = tag.Id;
+            entity.Name = tag.Name;
+
+            _context.SaveChanges();
+
+            return Updated;
         }
 
         public Response Delete(int tagId, bool force = false)
         {
-            throw new System.NotImplementedException();
+            var entity = _context.Tags.Find(tagId);
+
+            if (entity == null)
+            {
+                return NotFound;
+            }
+
+            if (force || entity.Tasks.Count == 0)
+            {
+                _context.Tags.Remove(entity);
+            } else if (entity.Tasks.Count != 0)
+            {
+                return Conflict;
+            }
+            
+            _context.SaveChanges();
+            return Deleted;
         }
     }
 }
