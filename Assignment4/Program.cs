@@ -10,7 +10,7 @@ namespace Assignment4
             using var context = new DbContextFactory().CreateDbContext();
             DbContextFactory.Seed(context);
 
-           var ret = new TaskRepository(context).ReadAllByUser(1);
+           var ret = new TaskRepository(context).Read(2);
         }
     }
 }

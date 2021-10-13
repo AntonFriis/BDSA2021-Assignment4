@@ -41,7 +41,7 @@ namespace Assignment4
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Users', RESEED, 0)"); // Reset Index to 0.
 
             var taskStateNew = new Task {Title = "Implement ITaskRepository", Description = "SomeThing", State = New, Tags = new List<Tag>{}};
-            var taskStateActive = new Task {Title = "Make UML", Description = "An Active", State = Active, Tags = new List<Tag>{}};
+            var taskStateActive = new Task {Title = "Make UML", Description = "An Active", Created = new DateTime(2021, 10, 7), State = Active, StateUpdated = new DateTime(2021, 10 , 10), Tags = new List<Tag>{}};
             var taskStateResolved = new Task {Title = "Cookies", Description = "We Did it", State = Resolved, Tags = new List<Tag>{}};
             var taskStateRemoved = new Task {Title = "Clean up Stuff", Description = "These are not the rubbish you are looking for", State = Removed, Tags = new List<Tag>{}};
 
