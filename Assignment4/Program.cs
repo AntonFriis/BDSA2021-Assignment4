@@ -11,15 +11,6 @@ namespace Assignment4
         {
             using var context = new DbContextFactory().CreateDbContext();
             DbContextFactory.Seed(context);
-
-            var workOnWorkTask = new TaskCreateDTO {
-                Title = "workOnWorkTask",
-                AssignedToId = 1,
-                Description = "A Work Task",
-                Tags = new List<string>{"coding"}
-            };
-
-            var ret = new TaskRepository(context).Create(workOnWorkTask);
         }
     }
 }
