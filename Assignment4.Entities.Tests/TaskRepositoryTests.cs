@@ -11,9 +11,8 @@ using static Assignment4.Core.Response;
 
 namespace Assignment4.Entities.Tests
 {
-    public class TaskRepositoryTests
+    public class TaskRepositoryTests : IDisposable
     {
-
         private readonly KanbanContext _context;
         private readonly TaskRepository _repo;
 
