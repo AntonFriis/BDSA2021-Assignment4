@@ -13,17 +13,21 @@ namespace Assignment4.Entities
         [StringLength(100)]
         public string Title { get; set; }
 
+        [StringLength(int.MaxValue)] //optional
+        public string Description { get; set; }
+
+        public DateTime Created { get; set; }
+
         //optional
         public User AssignedTo { get; set; }
 
-        [StringLength(int.MaxValue)] //optional
-        public string Description { get; set; }
+        public ICollection<Tag> Tags { get; set; }
 
         [Required]
         [StringLength(50)]
         public State State { get; set; }
 
-        public ICollection<Tag> Tags { get; set; }
+        public DateTime StateUpdated { get; set; }
 
     }
 }
