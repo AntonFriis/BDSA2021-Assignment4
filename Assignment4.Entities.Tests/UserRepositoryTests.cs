@@ -76,7 +76,7 @@ namespace Assignment4.Entities.Tests
             var result = _repo.Create(testUser);
 
             // Assert
-            Assert.Equal(4, result.Item2);
+            Assert.Equal(5, result.Item2);
         }
         
         [Fact]
@@ -124,7 +124,8 @@ namespace Assignment4.Entities.Tests
             Assert.Collection(users,
                 u => Assert.Equal(new UserDTO(1, "Mads", "mads@itu.dk"), u),
                 u => Assert.Equal(new UserDTO(2, "Kristian", "kris@itu.dk"), u),
-                u => Assert.Equal(new UserDTO(3, "Anton", "anto@itu.dk"), u)
+                u => Assert.Equal(new UserDTO(3, "Anton", "anto@itu.dk"), u),
+                u => Assert.Equal(new UserDTO(4, "Code Monkey", "Code@Monkey.dk"), u)
             );
         }
         
@@ -193,6 +194,7 @@ namespace Assignment4.Entities.Tests
 
         public void Dispose()
         {
+            _context?.Dispose();
         }
     }
 }
