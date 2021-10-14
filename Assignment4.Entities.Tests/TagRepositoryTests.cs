@@ -73,7 +73,7 @@ namespace Assignment4.Entities.Tests
             var result = _repo.Create(testTag);
 
             // Assert
-            Assert.Equal(4, result.Item2);
+            Assert.Equal(_context.Tags.Count(), result.Item2);
         }
         
         [Fact]
@@ -120,7 +120,8 @@ namespace Assignment4.Entities.Tests
             Assert.Collection(tags,
                 t => Assert.Equal(new TagDTO(1, "Coding"), t),
                 t => Assert.Equal(new TagDTO(2, "Documentation"), t),
-                t => Assert.Equal(new TagDTO(3, "Other"), t)
+                t => Assert.Equal(new TagDTO(3, "Other"), t),
+                t => Assert.Equal(new TagDTO(4, "Removed"), t)
             );
         }
         

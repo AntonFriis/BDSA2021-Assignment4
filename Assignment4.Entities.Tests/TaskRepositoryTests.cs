@@ -155,5 +155,10 @@ namespace Assignment4.Entities.Tests
 
             Assert.Equal(Deleted, result);
         }
+
+        public void Dispose()
+        {
+            _context?.Dispose();
+        }
     }
 }
