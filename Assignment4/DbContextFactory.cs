@@ -35,7 +35,7 @@ namespace Assignment4
             context.Database.ExecuteSqlRaw("DELETE dbo.Tasks"); // Remove existing. WARNING: This Should not be run in production environment.
             context.Database.ExecuteSqlRaw("DELETE dbo.Tags"); // Remove existing. WARNING: This Should not be run in production environment.
             context.Database.ExecuteSqlRaw("DELETE dbo.Users"); // Remove existing. WARNING: This Should not be run in production environment.
-
+            
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tasks', RESEED, 0)"); // Reset Index to 0.
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tags', RESEED, 0)"); // Reset Index to 0.
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Users', RESEED, 0)"); // Reset Index to 0.
