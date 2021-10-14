@@ -73,7 +73,7 @@ namespace Assignment4.Entities.Tests
             var result = _repo.Create(testTag);
 
             // Assert
-            Assert.Equal(_context.Tags.Count(), result.Item2);
+            Assert.Equal(5, result.Item2);
         }
         
         [Fact]
